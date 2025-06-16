@@ -1,5 +1,5 @@
 use crate::devices::bh1750::config::{Config, OperationMode, ResolutionMode};
-use crate::devices::bh1750::error::Error;
+use crate::devices::common::error::Error;
 use crate::devices::bh1750::registers::Command;
 use embassy_time::{Duration, Timer};
 use embedded_hal_async::i2c;
@@ -16,11 +16,10 @@ impl<I2C> BH1750<I2C>
 where
     I2C: i2c::I2c,
 {
+    #[allow(unused)]
     pub async fn new(i2c: I2C, config: Config) -> Result<Self> {
         let mut value = Self { i2c, config };
-
         value.upload_config().await?;
-
         Ok(value)
     }
 
